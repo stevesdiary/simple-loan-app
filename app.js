@@ -2,10 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const { randomUUID } = require('crypto');
-const { set } = require('mongoose');
+// const { set } = require('mongoose');
 const app = express();
 const dayjs = require('dayjs');
-
 
 require('dotenv').config();
 
@@ -23,13 +22,6 @@ connection.connect((err)=>{
 })
 
 app.use(bodyParser.json());
-
-// app.post('/', (req, res)=>{
-
-// })
-
-
-
 
 app.post('/loan', (req, res)=>{
    const body = req.body
@@ -66,7 +58,6 @@ app.post('/loan', (req, res)=>{
       )
    }
 )
-
 
 app.get('/loans', (req, res)=>{
    // const body = req.params.page
@@ -121,7 +112,6 @@ app.get('/:id', (req, res)=>{
    );
 })
 
-
 app.patch('/update', (req, res)=> {
    const amountPaid = req.body.amountPaid
    const id = req.body.id
@@ -134,7 +124,7 @@ app.patch('/update', (req, res)=> {
       payed,
       function (error, result){
          var prevPayment = result
-         console.log(prevPayment, disbursed, parseFloat(prevPayment[0].toRepay))
+         // console.log(prevPayment, disbursed, parseFloat(prevPayment[0].toRepay))
          let balance = parseFloat(disbursed) - parseFloat(prevPayment[0].toRepay)
          let totalPaid = parseFloat(prevPayment[0].toRepay) + parseFloat(amountPaid)
          let newBalance = parseFloat(balance) - parseFloat(amountPaid)
@@ -156,7 +146,6 @@ app.patch('/update', (req, res)=> {
                updatedAt = '${dateUpdated}'
             WHERE id = '${id}'
             `
-
             connection.query(
                query,
                function (error, result){
@@ -164,12 +153,8 @@ app.patch('/update', (req, res)=> {
                   res.send(result != null ? result : error)
                }
             )
-
-
       }
-   )
-   
-   
+   )  
 })
 
 app.delete('/:id', (req, res)=>{
