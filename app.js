@@ -76,6 +76,7 @@ app.get('/loans', (req, res)=>{
       }
    );
 })
+
 app.get('/search', (req, res)=>{
    const body = req.query.find
    // const {page, size} = req.params
@@ -88,6 +89,7 @@ app.get('/search', (req, res)=>{
       }
    );
 })
+
 app.get('/searchbystatus', (req, res)=>{
    const body = req.query.status
    const query = "SELECT * FROM `loan` WHERE `loanStatus` = '"+ body +"'"
