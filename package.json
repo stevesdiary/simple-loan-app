@@ -1,0 +1,32 @@
+{
+  "name": "loan1",
+  "version": "1.0.0",
+  "description": "CRUD operation on a loan table.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevesdiary/loan.git"
+  },
+  "keywords": [
+    "CRUD",
+    "loan",
+    "node",
+    "express"
+  ],
+  "author": "Stephen Oyeyemi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stevesdiary/loan/issues"
+  },
+  "homepage": "https://github.com/stevesdiary/loan#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "dayjs": "^1.11.4",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mysql2": "^2.3.3"
+  }
+}
