@@ -1,4 +1,4 @@
-# loan
+# Simple loan app
 This simple REST api using pure Node.js, Express.js and MySQL for database management can be used for the following:
 1. POST new entries of loan applicants and their data to the database
 2. GEt loan (be able to fetch loan by ID)
