@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const { randomUUID } = require('crypto');
-// const { set } = require('mongoose');
 const app = express();
 const dayjs = require('dayjs');
 
@@ -24,20 +23,15 @@ connection.connect((err)=>{
 app.use(bodyParser.json());
 
 app.post('/loan', (req, res)=>{
-   const body = req.body
-   // const fName = req.body.firstName
-   // const lName = req.body.lastName
+   const body = req.body;
    const principal = req.body.principal
 
 
-   const interest = 2/100 * principal
-   // const principal = req.body.principal
+   const interest = 2/100 * principal;
    
    let amountPaid = 0
    const toRepay = ((interest + principal) - amountPaid)
-   amountPaid = toRepay - principal
-   // for (let i = 1; i < 6; i++){
-   //    const element = body[i]
+   amountPaid = toRepay - principal;
    
    let date = dayjs().format('YYYY-MM-DD HH:mm:ss');
       console.log(date)
@@ -48,7 +42,8 @@ app.post('/loan', (req, res)=>{
          loanStatus = 'paid'
       }
 
-      const query = "INSERT INTO `loan` (`id`, `firstName`, `lastName`, `principal`, `interest`,`toRepay`, `createdAt`, `loanStatus` ) VALUES('"+randomUUID()+"', '"+ body.firstName +"', '"+ body.lastName +"', '" + body.principal+ "', '" + interest + "', '" + toRepay + "', '"+ date +"', '"+ loanStatus +"')"
+      const query = "INSERT INTO `loan` (`id`, `firstName`, `lastName`, `principal`, `interest`,`toRepay`, `createdAt`, `loanStatus` ) 
+         VALUES('"+randomUUID()+"', '"+ body.firstName +"', '"+ body.lastName +"', '" + body.principal+ "', '" + interest + "', '" + toRepay + "', '"+ date +"', '"+ loanStatus +"')"
       connection.query(
          query,
          function(error, result){
@@ -60,11 +55,9 @@ app.post('/loan', (req, res)=>{
 )
 
 app.get('/loans', (req, res)=>{
-   // const body = req.params.page
-   
    const page1 = req.query.page
 
-   var perPage = req.query.perPage; // 5 is the offset or step of the next limit
+   var perPage = req.query.perPage || 5; // 5 is the offset or step of the next limit
    console.log(perPage, page1)
    const query = `SELECT * FROM loan ORDER BY firstName LIMIT ${perPage}  OFFSET ${page1}`
 
@@ -78,8 +71,7 @@ app.get('/loans', (req, res)=>{
 })
 
 app.get('/search', (req, res)=>{
-   const body = req.query.find
-   // const {page, size} = req.params
+   const body = req.query.find;
    const query = "SELECT * FROM `loan` WHERE `firstName` = '"+ body +"' OR `lastName` = '"+ body +"'"
    connection.query(
       query,
@@ -125,14 +117,12 @@ app.patch('/update', (req, res)=> {
    connection.query(
       payed,
       function (error, result){
-         var prevPayment = result
-         // console.log(prevPayment, disbursed, parseFloat(prevPayment[0].toRepay))
+         var prevPayment = result;
          let balance = parseFloat(disbursed) - parseFloat(prevPayment[0].toRepay)
          let totalPaid = parseFloat(prevPayment[0].toRepay) + parseFloat(amountPaid)
          let newBalance = parseFloat(balance) - parseFloat(amountPaid)
          console.log(amountPaid, totalPaid, newBalance, balance)
          
-            // console.log(disbursed, balance, payed)
          let loanStatus = ''
             if (disbursed > totalPaid){
                loanStatus = 'partial'
